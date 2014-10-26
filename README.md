@@ -1,4 +1,4 @@
-AS-Buscaminas
+AS-Minesweeper
 =============
 
 Software Architecture project
