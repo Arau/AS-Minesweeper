@@ -11,9 +11,10 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name = "GAME")
+@Table(name = Game.TABLE)
 public class Game {
-
+	public static final String TABLE = "GAME";
+	
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id_game")

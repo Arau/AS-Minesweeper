@@ -9,8 +9,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "LEVEL")
+@Table(name = Level.TABLE)
 public class Level {
+	public static final String TABLE = "LEVEL";
+	
 	@Id private String name;
 	
 	@Column(name = "num_box_row")
