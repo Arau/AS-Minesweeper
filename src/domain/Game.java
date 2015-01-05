@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
@@ -30,10 +31,9 @@ public class Game {
 	private int numRuns;
 	
 	@ManyToOne
-	@JoinColumn(name = "name")
+	@JoinColumn(name = "level_name", referencedColumnName = "name" )
     private Level level;
 	
-
 	public Game() {}
 	
 	public Game(Level level) {
