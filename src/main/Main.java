@@ -5,8 +5,11 @@ import hibernate.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+import domain.Admin;
 import domain.Game;
 import domain.Level;
+import domain.Player;
+import domain.User;
 
 public class Main {
 
@@ -46,6 +49,29 @@ public class Main {
 		
 		System.out.println(l1 + " " + l2 + " " + l3);
 
+		
+		// User checks
+		
+		User u = new User ("u1", "n1", "n12", "pwd");
+		HibernateUtil.save(u);
+		
+		Admin admin = new Admin("a1", "n2", "n22", "pwd", "933843321");
+		HibernateUtil.save(admin);
+		
+		Player player = new Player("p1", "n3", "n32", "pwd", "p1@p1.com");
+		HibernateUtil.save(player);
+
+		
+		User 	res_u = (User) 	session.get(User.class, 	u.getUserName());
+		Admin	res_a = (Admin) session.get(Admin.class, 	admin.getUserName());
+		Player	res_p = (Player)session.get(Player.class, 	player.getUserName());
+		
+		String uname = res_u.getUserName();
+		String aname = res_a.getUserName();
+		String pname = res_p.getUserName();
+		
+		System.out.println(uname + " " + aname + " " + pname);
+		
 	}
 
 }
