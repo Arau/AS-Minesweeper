@@ -1,5 +1,13 @@
 package datainterface;
 
+import data.AdminCtrlDB;
+import data.BoxCtrlDB;
+import data.GameCtrlDB;
+import data.LevelCtrlDB;
+import data.MinesWeeperCtrlDB;
+import data.PlayerCtrlDB;
+import data.UserCtrlDB;
+
 public class DataControllerFactory {
 	private static DataControllerFactory instance;
 	private static AdminCtrl adminCtrl;
