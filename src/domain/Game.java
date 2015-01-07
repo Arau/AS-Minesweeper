@@ -1,7 +1,9 @@
 package domain;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,14 +36,20 @@ public class Game {
 	@JoinColumn(name = "level_name", referencedColumnName = "name" )
     private Level level;
 	
+	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
+	@JoinColumn(name = "username", referencedColumnName = "username")
+	private Player player;
+	
+	
 	public Game() {}
 	
-	public Game(Level level) {
+	public Game(Player player, Level level) {
 		this.isFinished = Boolean.FALSE;
 		this.isWon = Boolean.FALSE;
 		this.numRuns = 0;
-		
-		this.level = level;
+			
+        this.player	= player;
+		this.level 	= level;
 	}
 	
 	public int getId() {

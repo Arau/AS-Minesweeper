@@ -20,18 +20,33 @@ public class Main {
 		HibernateUtil.save(easy);
 		HibernateUtil.save(medium);
 		HibernateUtil.save(difficult);
-		
+	
 
-		// We are going to ask a controller to get the level Object by name.
-		// However, due to testing purposes we instantiate level directly
+		// User checks		
+		User u = new User ("u1", "n1", "n12", "pwd");
+		HibernateUtil.save(u);
 		
-		Game g1 = new Game(easy);
-		Game g2 = new Game(medium);
-		Game g3 = new Game(difficult);
+		Admin admin = new Admin("a1", "n2", "n22", "pwd", "933843321");
+		Player player = new Player("p1", "n3", "n32", "pwd", "p1@p1.com");
+		Player p2 = new Player("p2", "n4", "n42", "pwd", "p2@p2.com");
+		Player p3 = new Player("p3", "n4", "n42", "pwd", "p3@p3.com");
+
+		HibernateUtil.save(admin);
+		HibernateUtil.save(player);		
+		HibernateUtil.save(p2);		
+		HibernateUtil.save(p3);
+		
+		
+		Game g1 = new Game(player, easy);
+		Game g2 = new Game(p2, medium);
+		Game g3 = new Game(p3, difficult);
+		Game g4 = new Game(p2, easy);
+		
 		HibernateUtil.save(g1);
 		HibernateUtil.save(g2);
 		HibernateUtil.save(g3);
-		
+		HibernateUtil.save(g4);
+			
 		
 		SessionFactory sf = HibernateUtil.getSessionFactory();
 		Session session = sf.openSession();
@@ -48,19 +63,6 @@ public class Main {
 		String l3 = res3.getLevelName();
 		
 		System.out.println(l1 + " " + l2 + " " + l3);
-
-		
-		// User checks
-		
-		User u = new User ("u1", "n1", "n12", "pwd");
-		HibernateUtil.save(u);
-		
-		Admin admin = new Admin("a1", "n2", "n22", "pwd", "933843321");
-		HibernateUtil.save(admin);
-		
-		Player player = new Player("p1", "n3", "n32", "pwd", "p1@p1.com");
-		HibernateUtil.save(player);
-
 		
 		User 	res_u = (User) 	session.get(User.class, 	u.getUserName());
 		Admin	res_a = (Admin) session.get(Admin.class, 	admin.getUserName());

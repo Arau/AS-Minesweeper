@@ -8,7 +8,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import datainterface.PlayerCtrl;
-import domain.Level;
 import domain.Player;
 
 public class PlayerCtrlDB implements PlayerCtrl {

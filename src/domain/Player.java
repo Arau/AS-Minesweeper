@@ -1,7 +1,10 @@
 package domain;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
@@ -20,4 +23,8 @@ public class Player extends User {
 	}
 	
 	public Player () {}
+		
+	@OneToMany(mappedBy = "player")
+	private Set<Game> games;
+		
 }

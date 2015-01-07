@@ -8,7 +8,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import datainterface.MinesWeeperCtrl;
-import domain.Level;
 import domain.MinesWeeper;
 
 public class MinesWeeperCtrlDB implements MinesWeeperCtrl {
