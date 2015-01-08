@@ -46,6 +46,9 @@ public class Main {
 		HibernateUtil.save(g2);
 		HibernateUtil.save(g3);
 		HibernateUtil.save(g4);
+		
+		p2.setOldGame(g2);
+		p2.setCurrentGame(g4);
 			
 		
 		SessionFactory sf = HibernateUtil.getSessionFactory();
@@ -53,8 +56,7 @@ public class Main {
 		 
 		Game res1 = (Game) session.get(Game.class, g1.getId());
 		Game res2 = (Game) session.get(Game.class, g2.getId());
-		Game res3 = (Game) session.get(Game.class, g3.getId());
-		session.close();
+		Game res3 = (Game) session.get(Game.class, g3.getId());		
 		
 		
 		// Check output from Game 
@@ -73,7 +75,13 @@ public class Main {
 		String pname = res_p.getUserName();
 		
 		System.out.println(uname + " " + aname + " " + pname);
+	
+		Player	res_p2 = (Player)session.get(Player.class, 	p2.getUserName());
+		Game oldGame = res_p2.getOldGame();
+		System.out.println("oldgame level name " + oldGame.getLevelName() );
 		
+		
+		session.close();				
 	}
 
 }

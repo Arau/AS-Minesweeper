@@ -1,6 +1,7 @@
 package domain;
 
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,11 +21,29 @@ public class Player extends User {
 	public Player (String user, String name, String sName, String pass, String mail) {
 		super(user, name, sName, pass);
 		this.mail = mail;
+		games = new ArrayList<Game>(2); 
 	}
 	
 	public Player () {}
 		
 	@OneToMany(mappedBy = "player")
-	private Set<Game> games;
+	private List<Game> games;
+	
+	public Game getOldGame () {
+		return games.get(0);
+	}
+	
+	public void setOldGame (Game g) {
+		games.add(0, g);
+	}
+	
+	public Game getCurrentGame () {
+		return games.get(1);
+	}
+	
+	public void setCurrentGame (Game g) {
+		games.add(1, g);
+	}
+	
 		
 }
