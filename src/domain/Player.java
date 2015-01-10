@@ -1,6 +1,9 @@
 package domain;
 
+import hibernate.HibernateUtil;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -21,7 +24,10 @@ public class Player extends User {
 	public Player (String user, String name, String sName, String pass, String mail) {
 		super(user, name, sName, pass);
 		this.mail = mail;
-		games = new ArrayList<Game>(2); 
+		games = new ArrayList<Game>(2);
+		Collections.addAll(games, null, null);
+		
+		HibernateUtil.update(this);
 	}
 	
 	public Player () {}
@@ -42,8 +48,10 @@ public class Player extends User {
 	}
 	
 	public void setCurrentGame (Game g) {
-		games.add(1, g);
+		if (games.get(1) != null) {
+			Game aged = games.get(1);
+		    this.setOldGame(aged);
+		}
+		games.add(g);
 	}
-	
-		
 }

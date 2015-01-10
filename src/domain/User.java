@@ -1,5 +1,7 @@
 package domain;
 
+import hibernate.HibernateUtil;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
@@ -24,6 +26,8 @@ public class User {
 		name 	= n;
 		surname	= sName;
 		pwd		= pass;
+		
+		HibernateUtil.save(this);
 	}
 	
 	public User () {}

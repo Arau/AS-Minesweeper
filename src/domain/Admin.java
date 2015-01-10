@@ -1,5 +1,7 @@
 package domain;
 
+import hibernate.HibernateUtil;
+
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
@@ -15,6 +17,7 @@ public class Admin extends User {
 	public Admin (String user, String name, String sName, String pass, String telf) {
 		super(user, name, sName, pass);
 		this.telf = telf;
+		HibernateUtil.update(this);
 	}
 	
 	public Admin () {}
