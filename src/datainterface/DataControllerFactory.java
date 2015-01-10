@@ -4,7 +4,6 @@ import data.AdminCtrlDB;
 import data.BoxCtrlDB;
 import data.GameCtrlDB;
 import data.LevelCtrlDB;
-import data.MinesWeeperCtrlDB;
 import data.PlayerCtrlDB;
 import data.UserCtrlDB;
 
@@ -14,7 +13,6 @@ public class DataControllerFactory {
 	private static BoxCtrl boxCtrl;
 	private static GameCtrl gameCtrl;
 	private static LevelCtrl levelCtrl;
-	private static MinesWeeperCtrl minesWeeperCtrl;
 	private static PlayerCtrl playerCtrl;
 	private static UserCtrl userCtrl;
 	
@@ -49,12 +47,6 @@ public class DataControllerFactory {
 		if (levelCtrl == null) 
 			levelCtrl = LevelCtrlDB.getInstance();
 		return levelCtrl;
-	}
-	
-	public MinesWeeperCtrl getMinesWeeperCtrl() {
-		if (minesWeeperCtrl == null) 
-			minesWeeperCtrl = MinesWeeperCtrlDB.getInstance();
-		return minesWeeperCtrl;
 	}
 	
 	public PlayerCtrl getPlayerCtrl() {
