@@ -11,10 +11,11 @@ import domain.Level;
 import domain.MinesWeeper;
 import domain.Player;
 import domain.User;
+import domaincontrollers.LoginUseCase;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		Level easy      = new Level("easy", 	10, 10, 10);
 		Level medium    = new Level("medium", 	20, 20, 20);
 		Level difficult = new Level("difficult",30, 30, 30);		
@@ -73,6 +74,11 @@ public class Main {
 		System.out.println("oldgame level name " + oldGame.getLevelName() );
 		
 		
-		session.close();				
+		session.close();			
+		
+		LoginUseCase l = new LoginUseCase();
+		boolean log = l.login(player.getUserName(), "pwd");
+		if (log) System.out.println("Logged!");
+		
 	}
 }
