@@ -10,10 +10,12 @@
   <property name="hibernate.default_schema">minesweeper</property>
   <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
   <property name="hibernate.hbm2ddl.auto">update</property>
+  <mapping class="domain.MinesWeeper"/>
   <mapping class="domain.Level"/>
   <mapping class="domain.Game"/>  
   <mapping class="domain.User"/>  
   <mapping class="domain.Admin"/>
   <mapping class="domain.Player"/>
+  <mapping class="domain.Box"/>
  </session-factory>
 </hibernate-configuration>
