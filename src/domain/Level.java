@@ -1,5 +1,7 @@
 package domain;
 
+import hibernate.HibernateUtil;
+
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -35,6 +37,7 @@ public class Level {
 		this.numBoxRow = numBoxRow;
 		this.numBoxColumn = numBoxCol;
 		this.numMines = numMines;
+		HibernateUtil.save(this);
 	}
 	
 	public String getName() {
