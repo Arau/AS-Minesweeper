@@ -49,7 +49,7 @@ public class AdminCtrlDB implements AdminCtrl {
 		SessionFactory sf = HibernateUtil.getSessionFactory();
 		Session session = sf.openSession();
 		 
-		List<Admin> res = (List<Admin>)session.createQuery("from "+Admin.TABLE).list();
+		List<Admin> res = (List<Admin>)session.createQuery("from Admin").list();
 		session.close();
 		return res;
 	}

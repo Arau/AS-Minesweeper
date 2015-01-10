@@ -50,7 +50,7 @@ public class PlayerCtrlDB implements PlayerCtrl {
 		SessionFactory sf = HibernateUtil.getSessionFactory();
 		Session session = sf.openSession();
 		 
-		List<Player> res = (List<Player>)session.createQuery("from "+Player.TABLE).list();
+		List<Player> res = (List<Player>)session.createQuery("from Player").list();
 		session.close();
 		return res;
 	}

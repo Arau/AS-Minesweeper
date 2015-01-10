@@ -49,7 +49,7 @@ public class GameCtrlDB implements GameCtrl {
 		SessionFactory sf = HibernateUtil.getSessionFactory();
 		Session session = sf.openSession();
 		 
-		List<Game> res = (List<Game>)session.createQuery("from "+Game.TABLE).list();
+		List<Game> res = (List<Game>)session.createQuery("from Game").list();
 		session.close();
 		return res;
 	}

@@ -49,7 +49,7 @@ public class UserCtrlDB implements UserCtrl {
 		SessionFactory sf = HibernateUtil.getSessionFactory();
 		Session session = sf.openSession();
 		 
-		List<User> res = (List<User>)session.createQuery("from "+User.TABLE).list();
+		List<User> res = (List<User>)session.createQuery("from User").list();
 		session.close();
 		return res;
 	}

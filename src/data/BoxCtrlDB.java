@@ -49,7 +49,7 @@ public class BoxCtrlDB implements BoxCtrl {
 		SessionFactory sf = HibernateUtil.getSessionFactory();
 		Session session = sf.openSession();
 		 
-		List<Box> res = (List<Box>) session.createQuery("from "+ Box.TABLE).list();
+		List<Box> res = (List<Box>) session.createQuery("from Box").list();
 		session.close();
 		return res;
 	}

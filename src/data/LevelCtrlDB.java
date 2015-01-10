@@ -49,7 +49,7 @@ public class LevelCtrlDB implements LevelCtrl {
 		SessionFactory sf = HibernateUtil.getSessionFactory();
 		Session session = sf.openSession();
 		 
-		List<Level> res = (List<Level>)session.createQuery("from "+Level.TABLE).list();
+		List<Level> res = (List<Level>)session.createQuery("from Level").list();
 		session.close();
 		return res;
 	}
