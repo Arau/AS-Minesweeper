@@ -1,17 +1,14 @@
 package main;
 
-import hibernate.HibernateUtil;
-
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import java.util.List;
 
 import domain.Admin;
 import domain.Game;
 import domain.Level;
-import domain.MinesWeeper;
 import domain.Player;
 import domain.User;
 import domaincontrollers.LoginUseCase;
+import domaincontrollers.RetrieveLevelsUseCase;
 
 public class Main {
 
@@ -23,62 +20,30 @@ public class Main {
 
 		// User checks		
 		User u = new User ("u1", "n1", "n12", "pwd");		
-		
 		Admin admin = new Admin("a1", "n2", "n22", "pwd", "933843321");
 		Player player = new Player("p1", "n3", "n32", "pwd", "p1@p1.com");
 		Player p2 = new Player("p2", "n4", "n42", "pwd", "p2@p2.com");
 		Player p3 = new Player("p3", "n4", "n42", "pwd", "p3@p3.com");
-
 		
-		MinesWeeper mw = MinesWeeper.getInstance();
-		int id = mw.getId();
 		
 		Game g1 = new Game(1, player, easy);
-		Game g2 = new Game(2, p2, medium);
-		Game g3 = new Game(3, p3, difficult);
-		Game g4 = new Game(4, p2, easy);
+//		Game g2 = new Game(2, p2, medium);
+//		Game g3 = new Game(3, p3, difficult);
+//		Game g4 = new Game(4, p2, easy);
 		
+//		SessionFactory sf = HibernateUtil.getSessionFactory();
+//		Session session = sf.openSession();
+//		
+//		session.close();			
 		
-		p2.setOldGame(g2);
-		p2.setCurrentGame(g4);
-			
-		
-		SessionFactory sf = HibernateUtil.getSessionFactory();
-		Session session = sf.openSession();
-		 
-		Game res1 = (Game) session.get(Game.class, g1.getId());
-		Game res2 = (Game) session.get(Game.class, g2.getId());
-		Game res3 = (Game) session.get(Game.class, g3.getId());		
-		
-		
-		// Check output from Game 
-		String l1 = res1.getLevelName();
-		String l2 = res2.getLevelName();
-		String l3 = res3.getLevelName();
-		
-		System.out.println(l1 + " " + l2 + " " + l3);
-		System.out.println(l1);
-		
-		User 	res_u = (User) 	session.get(User.class, 	u.getUserName());
-		Admin	res_a = (Admin) session.get(Admin.class, 	admin.getUserName());
-		Player	res_p = (Player)session.get(Player.class, 	player.getUserName());
-		
-		String uname = res_u.getUserName();
-		String aname = res_a.getUserName();
-		String pname = res_p.getUserName();
-		
-		System.out.println(uname + " " + aname + " " + pname);
-	
-		Player	res_p2 = (Player)session.get(Player.class, 	p2.getUserName());
-		Game oldGame = res_p2.getOldGame();
-		System.out.println("oldgame level name " + oldGame.getLevelName() );
-		
-		
-		session.close();			
-		
-		LoginUseCase l = new LoginUseCase();
-		boolean log = l.login(player.getUserName(), "pwd");
+		LoginUseCase logUC = new LoginUseCase();
+		boolean log = logUC.login(player.getUserName(), "pwd");
 		if (log) System.out.println("Logged!");
 		
+		RetrieveLevelsUseCase levUC = new RetrieveLevelsUseCase();
+		List<String> levelNames = levUC.retrieveLevels();
+		for (String l: levelNames) {
+			System.out.println(l);
+		}
 	}
 }
