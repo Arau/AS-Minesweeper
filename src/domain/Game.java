@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import javassist.bytecode.stackmap.TypeData.ClassName;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,10 +18,15 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.apache.log4j.Logger;
+
 
 @Entity
 @Table(name = Game.TABLE)
 public class Game {
+	@Transient
+	private static final Logger logger = Logger.getLogger( ClassName.class.getName() );
+
 	public static final String TABLE = "GAME";
 	
 	@Id    
@@ -87,7 +94,8 @@ public class Game {
 		for (List<Integer> pos: minesPos) {
 			Integer row = pos.get(0);
 			Integer col = pos.get(1);
-			System.out.println("Bomb in " + row + " " + col);
+			logger.debug("\n");
+			logger.debug("Create bomb in: " + row + " " + col);
 			this.fillAdjacentBoxes(width, height, row, col, visited);
 		}
 		this.fillNonAdjacentBoxes(width, height, visited);
@@ -104,7 +112,7 @@ public class Game {
 				if (!visited[row][col]) {
 					mineIsSet = true;
 					visited[row][col] = true;
-					System.out.println("Assign bomb in:  Row: " + row + " Col:  " + col);
+					logger.debug("Assign bomb to:  Row: " + row + " Col:  " + col);
 					List tmp = new ArrayList<Integer> (2);
 					tmp.add(row);
 					tmp.add(col);
@@ -192,27 +200,19 @@ public class Game {
 		if (!visited[x][y]) {
 			visited[x][y] = true;
 			board[x][y] = new Box(this, x, y, false);
-			System.out.println("Create box in " + x + " " + y);
-			board[x][y].incrementMinesAround();
-		} else {
-			System.out.println("Box already created in " + x + " " + y);
-			board[x][y].incrementMinesAround();	
+			logger.debug("Create near bomb box in " + x + " " + y);
 		}
-		if (board[x][y] == null) System.out.println("null in " + x + " " + y);		
-		
-		//board[x][y].incrementMinesAround();					
+		board[x][y].incrementMinesAround();
 	}
 
 	private void setUpTopBox (int row, int col, boolean[][] visited) {
 		int tr = row - 1; // top row
-		System.out.println("Row: " + row + " Col:  " + col + " Top Row: " + tr );
 		setUpBox(tr, col, visited);
 	}
 	
 	private void setUpTopRightBox (int row, int col, boolean[][] visited) {		
 		int tr = row - 1; // top row
 		int rc = col + 1; // right col
-		System.out.println("Row: " + row + " Col:  " + col + " Top Row: " + tr + "  Right col " + rc );
 		setUpBox(tr, rc, visited);
 	}
 	
