@@ -52,10 +52,13 @@ public class Player extends User {
 	public void setCurrentGame (Game g) {
 		if (games.size() == 0) {
 			Collections.addAll(games, null, g);
+		} 
+		else if (games.size() == 1) {
+			games.add(g);
 		} else {
 			Game aged = games.get(1);
 		    this.setOldGame(aged);
-			games.add(g);
+			games.add(1, g);
 		}
 	}
 }
