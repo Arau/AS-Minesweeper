@@ -1,6 +1,7 @@
 package domain;
 
 import hibernate.HibernateUtil;
+import javassist.bytecode.stackmap.TypeData.ClassName;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,11 +9,20 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.apache.log4j.Logger;
+
+import exceptions.BoxException;
 
 @Entity
 @Table(name = Box.TABLE)
 public class Box {
-	public static final String TABLE = "BOX";	
+	public static final String TABLE = "BOX";
+	
+	@Transient
+	private static final Logger logger = Logger.getLogger( ClassName.class.getName() );
+	
 	
 	@Id
 	private int id;
@@ -31,15 +41,24 @@ public class Box {
 	private int numMinesAround;
 	
 	@Column(name = "has_mine") 
-	private boolean hasMine; 
+	private boolean hasMine;
+	
+	@Column(name = "is_hidden") 
+	private boolean isHidden;
+	
+	@Column(name = "is_marked") 
+	private boolean isMarked;
+	
 	
 	public Box () {}
 	
 	public Box (Game game, int numRow, int numCol, boolean hasMine) {		
-		this.game	= game;
-		this.numRow	= numRow;
-		this.numCol = numCol;		
-		this.hasMine = hasMine;
+		this.game		= game;
+		this.numRow		= numRow;
+		this.numCol 	= numCol;		
+		this.hasMine 	= hasMine;
+		this.isHidden 	= true;
+		this.isMarked 	= false;
 		this.id = hashCode();
 		this.numMinesAround = 0;
 		HibernateUtil.save(this);
@@ -63,5 +82,33 @@ public class Box {
 	public void incrementMinesAround() {
 		numMinesAround++;
 		HibernateUtil.update(this);
+	}
+	
+	public void mark () throws BoxException {
+		if (this.isMarked) {
+			throw new BoxException("Box: " + numRow + " " + numCol + " has already marked");
+		}
+		
+		if (!this.isHidden) {
+			throw new BoxException("Box: " + numRow + " " + numCol + " has already been shown");
+		}
+		
+		this.isMarked = true;
+		HibernateUtil.update(this);
+		logger.debug("Box " + numRow + " " + numCol + " has been marked");
+	}
+	
+	public void unMark () throws BoxException {
+		if (!this.isMarked) {
+			throw new BoxException("Box: " + numRow + " " + numCol + " has not been marked");
+		}
+		
+		if (!this.isHidden) {
+			throw new BoxException("Box: " + numRow + " " + numCol + " has already been shown");
+		}
+		
+		this.isMarked = false;		
+		HibernateUtil.update(this);
+		logger.debug("Box " + numRow + " " + numCol + " has been unmarked");
 	}
 }

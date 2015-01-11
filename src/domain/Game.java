@@ -20,6 +20,8 @@ import javax.persistence.Transient;
 
 import org.apache.log4j.Logger;
 
+import exceptions.BoxException;
+
 
 @Entity
 @Table(name = Game.TABLE)
@@ -247,6 +249,14 @@ public class Game {
 		int tr = row - 1; // top row
 		int lc = col - 1; // left col
 		setUpBox(tr, lc, visited);
+	}
+	
+	public void markBox(int row, int col) throws BoxException {
+		board[row][col].mark();
+	}
+	
+	public void unMarkBox(int row, int col) throws BoxException {
+		board[row][col].unMark();
 	}
 	
 	public int getId() {
