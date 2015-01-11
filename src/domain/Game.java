@@ -1,11 +1,6 @@
 package domain;
 
 import hibernate.HibernateUtil;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 import javassist.bytecode.stackmap.TypeData.ClassName;
 
 import javax.persistence.CascadeType;
