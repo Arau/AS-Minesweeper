@@ -6,8 +6,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
@@ -32,7 +34,7 @@ public class Player extends User {
 	
 	public Player () {}
 		
-	@OneToMany(mappedBy = "player")
+	@OneToMany(mappedBy = "player", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Game> games;
 	
 	public Game getOldGame () {
@@ -48,10 +50,12 @@ public class Player extends User {
 	}
 	
 	public void setCurrentGame (Game g) {
-		if (games.get(1) != null) {
+		if (games.size() == 0) {
+			Collections.addAll(games, null, g);
+		} else {
 			Game aged = games.get(1);
 		    this.setOldGame(aged);
+			games.add(g);
 		}
-		games.add(g);
 	}
 }
