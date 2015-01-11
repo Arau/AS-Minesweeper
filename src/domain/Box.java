@@ -90,7 +90,7 @@ public class Box {
 		}
 		
 		if (!this.isHidden) {
-			throw new BoxException("Mark Box: " + numRow + " " + numCol + " has already been shown");
+			throw new BoxException("Mark Box: " + numRow + " " + numCol + " has already been discovered");
 		}
 		
 		this.isMarked = true;
@@ -104,7 +104,7 @@ public class Box {
 		}
 		
 		if (!this.isHidden) {
-			throw new BoxException("Unmark Box: " + numRow + " " + numCol + " Has already been shown");
+			throw new BoxException("Unmark Box: " + numRow + " " + numCol + " Has already been discovered");
 		}
 		
 		this.isMarked = false;		
@@ -118,5 +118,27 @@ public class Box {
 	
 	public int getNumCol() {
 		return numCol;
+	}
+	
+	public boolean hasMine () {
+		return hasMine;
+	}
+	
+	public boolean hasAdjMine () {
+		return (numMinesAround > 0);
+	}
+	
+	public boolean isHidden() {
+		return this.isHidden;
+	}
+	
+	public void discover () throws BoxException {
+		if (!this.isHidden) {
+			throw new BoxException("Discover Box: " + numRow + " " + numCol + " Has already been shown");
+		}
+
+		this.isHidden = false;
+		HibernateUtil.update(this);
+		logger.debug("Box " + numRow + " " + numCol + " has been discovered");
 	}
 }
