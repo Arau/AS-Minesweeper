@@ -1,6 +1,9 @@
 package domain;
 
 import hibernate.HibernateUtil;
+
+import java.util.List;
+
 import javassist.bytecode.stackmap.TypeData.ClassName;
 
 import javax.persistence.CascadeType;
@@ -16,6 +19,7 @@ import javax.persistence.Transient;
 import org.apache.log4j.Logger;
 
 import utils.Board;
+import utils.Position;
 import exceptions.BoxException;
 
 
@@ -66,12 +70,20 @@ public class Game {
 		this.board = new Board(this, level.getNumBoxColumn(), level.getNumBoxRow(), level.getNumMines());
 	}
 	
-	public void markBox(int row, int col) throws BoxException {
-		board.markBox(row, col);
+	public void markBox(Position p) {
+		board.markBox(p);
 	}
 	
-	public void unMarkBox(int row, int col) throws BoxException {
-		board.unMarkBox(row, col);
+	public void unMarkBox(Position p) {
+		board.unMarkBox(p);
+	}
+	
+	public List<Position> discover (Position p) {
+		if (board.hasMine(p)) {
+			// Lost game
+		}
+		
+		return board.discover(p); 
 	}
 	
 	public int getId() {
@@ -117,4 +129,10 @@ public class Game {
 	public String getLevelName() {
 		return level.getName();
 	}
+	
+	public void printBoard() {
+		board.printSTDOUT(false);
+		board.printSTDOUT(true);
+	}
+	
 }	

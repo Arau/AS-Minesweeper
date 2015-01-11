@@ -1,7 +1,10 @@
 package utils;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Random;
 
 import javassist.bytecode.stackmap.TypeData.ClassName;
@@ -53,9 +56,39 @@ public class Board {
 			this.fillAdjacentBoxes(pos.getRow(), pos.getCol());
 		}
 		this.fillNonAdjacentBoxes();
-		
-		// visited to false for future uses
 		this.setVisitedToFalse();
+	}
+	
+	public void markBox(Position p) {
+		try {
+			this.getBox(p).mark();
+		} catch (BoxException e) {
+			logger.warn(e.getMessage());
+		}
+	}
+	
+	public void unMarkBox(Position p) {
+		try {
+			this.getBox(p).unMark();
+		} catch (BoxException e) {
+			logger.warn(e.getMessage());
+		}
+	}
+	
+	public List<Position> discover (Position p) {
+		List<Position> toDiscover = new ArrayList<Position>();
+		if (this.hasMine(p)) {
+			logger.debug("Mine Box: " + p.toString());
+			toDiscover = discoverAll();
+		} else if ( this.getBox(p).hasAdjMine() ) {
+			toDiscover.add(p);
+			this.discoverBox(p);
+			visit(p);
+		} else {
+			toDiscover = discoverAdjBoxesBFS(p);
+		}
+		
+		return toDiscover;
 	}
 	
 	private List<Position> getPosMines (int num) {
@@ -212,11 +245,129 @@ public class Board {
 		}
 	}
 	
-	public void markBox(int row, int col) throws BoxException {
-		board[row][col].mark();
+	private List<Position> discoverAdjBoxesBFS (Position source) {
+		List<Position> pos = new ArrayList<Position>();
+		Queue<Position> toVisit = new LinkedList<Position>();
+		
+		toVisit.add(source);
+		while(!toVisit.isEmpty()) {
+			Position p = toVisit.poll();
+			if (!visited(p)) {
+				visit(p);
+				if ( !this.hasMine(p) ) {
+					pos.add(p);
+					this.discoverBox(p);
+					logger.debug("Discover Box: " + p.toString());
+					
+					if (!this.getBox(p).hasAdjMine()) {
+						addCandidatesToVisit(p, toVisit);
+					}
+				}
+			}
+		}
+		
+		return pos;
 	}
 	
-	public void unMarkBox(int row, int col) throws BoxException {
-		board[row][col].unMark();
+	private List<Position> discoverAll() {
+		List<Position> pos = new ArrayList<Position>();
+		for (int i = 0; i < height; ++i) {
+			for (int j = 0; j < width; ++j) {
+				Position p = new Position(i,j);
+				if( !visited(p) ) {
+					this.discoverBox(p);
+					pos.add(p);
+				}
+			}
+		}
+		return pos;
 	}
+	
+	private void addCandidatesToVisit(Position p, Queue<Position> toVisit) {
+		for (Position adj: adjPos(p)) {
+			if ( isValid(adj) && !visited(adj) ) {
+				toVisit.add(adj);
+				logger.debug("Candidate to discover Box: " + adj.toString());
+			}
+		}
+	}
+	
+	private Box getBox (Position p) {
+		return board[p.getRow()][p.getCol()];
+	}
+	
+	private void discoverBox (Position p) {
+		try {
+			this.getBox(p).discover();
+		} catch (BoxException e) {
+			logger.warn(e.getMessage());
+		}
+	}
+	
+	private boolean visited (Position p) {
+		return this.visited[p.getRow()][p.getCol()];
+	}
+	
+	private void visit (Position p) {
+		this.visited[p.getRow()][p.getCol()] = true;
+	}
+	
+	private List<Position> adjPos (Position p) {
+		int r = p.getRow();
+		int c = p.getCol();
+		
+		Position top	 	= new Position(r-1 , c);
+		Position topRight	= new Position(r-1 , c+1);
+		Position right		= new Position(r   , c+1);
+		Position botRight	= new Position(r+1 , c+1);
+		Position bottom		= new Position(r+1 , c);
+		Position botLeft	= new Position(r+1 , c-1);
+		Position left		= new Position(r   , c-1);
+		Position topLeft	= new Position(r-1 , c-1);
+		
+		List<Position> adjs = new ArrayList<Position>();
+		Collections.addAll(adjs, top, topRight, right, botRight, bottom, botLeft, left, topLeft);
+		return adjs;
+	}
+	
+	private boolean isValid (Position p) {
+		int r = p.getRow();
+		int c = p.getCol();
+		
+		return (-1 < r && r < height &&
+				-1 < c && c < width);
+	}
+	
+	private boolean isHidden (Position p) {
+		return this.getBox(p).isHidden();
+	}
+	
+	public boolean hasMine (Position p) {
+		return this.getBox(p).hasMine();
+	}
+	
+	public void printSTDOUT (boolean all) {		
+		for (int i = 0; i < height; ++i) {
+			String s = "";
+			for (int j = 0; j < width; ++j) {
+				Position p = new Position(i,j);
+				
+				if ( this.isHidden(p) && !all) {
+					s += "  X";
+				} else {
+					
+					if (this.hasMine(p)) {
+						s += "  B";
+					} else {
+						int num = this.getBox(p).getNumMinesAround();
+						s += "  " + num;
+					}
+				}
+			}
+			System.out.println(s + "\n");
+		}
+		System.out.println("\n");
+	}	
 }
+
+

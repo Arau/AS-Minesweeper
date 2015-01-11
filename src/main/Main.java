@@ -2,19 +2,17 @@ package main;
 
 import java.util.List;
 
-import domain.Admin;
+import utils.Position;
 import domain.Level;
-import domain.Player;
-import domain.User;
 import domaincontrollers.PlayUseCase;
 
 public class Main {
 
 	public static void main(String[] args) throws Exception {
-//		Level easy      = new Level("easy", 	10, 10, 10);
+//		Level easy      = new Level("easy", 	20, 20, 10);
 //		Level medium    = new Level("medium", 	20, 20, 20);
-//		Level difficult = new Level("difficult",30, 30, 30);		
-//	
+//		Level difficult = new Level("difficult",4, 4, 8);		
+//
 //
 //		User u = new User ("u1", "n1", "n12", "pwd");		
 //		Admin admin = new Admin("a1", "n2", "n22", "pwd", "933843321");
@@ -28,12 +26,26 @@ public class Main {
 		String username = "p1";
 		if (playUC.login(username, "pwd")) {
 			List<String> levels = playUC.retrieveLevels();
-			playUC.startGame(username, levels.get(1));
+			playUC.startGame(username, levels.get(2));
 			
-			playUC.markBox(0, 0);
-			playUC.unMarkBox(0, 0);
+			Position p = new Position(0, 0);
+			playUC.markBox(p);
+			playUC.unMarkBox(p);
 			
-			playUC.unMarkBox(1, 0);
+			playUC.unMarkBox( new Position(2, 2) );
+
+			playUC.printBoard();
+			playUC.discover( new Position(0, 0) );
+			playUC.printBoard();
+			
+			playUC.discover( new Position(2, 2) );
+			playUC.printBoard();
+			
+			playUC.discover( new Position(2, 3) );
+			playUC.printBoard();
+			
+			playUC.discover( new Position(1, 0) );
+			playUC.printBoard();
 		}
 	}
 }

@@ -2,10 +2,7 @@ package domaincontrollers;
 
 import java.util.List;
 
-import javassist.bytecode.stackmap.TypeData.ClassName;
-
-import org.apache.log4j.Logger;
-
+import utils.Position;
 import datainterface.DataControllerFactory;
 import datainterface.LevelCtrl;
 import datainterface.PlayerCtrl;
@@ -16,7 +13,6 @@ import domain.Player;
 import exceptions.BoxException;
 
 public class PlayUseCase {
-	private static final Logger logger = Logger.getLogger( ClassName.class.getName() );
 	
 	private Game game;
 	
@@ -41,19 +37,20 @@ public class PlayUseCase {
 		mw.setId(idGame + 1);
 	}
 	
-	public void markBox(int row, int col) {
-		try {
-			this.game.markBox(row, col);
-		} catch (BoxException e) {
-			logger.warn(e.getMessage());
-		}
+	public void markBox(Position p) {
+		this.game.markBox(p);
+	}
+
+	public void unMarkBox(Position p) {
+		this.game.unMarkBox(p);
 	}
 	
-	public void unMarkBox(int row, int col) {
-		try {
-			this.game.unMarkBox(row, col);
-		} catch (BoxException e) {
-			logger.warn(e.getMessage());
-		}
+	public List<Position> discover (Position p) throws BoxException {
+		List<Position> discovered = game.discover(p);
+		return discovered;
+	}
+	
+	public void printBoard() {
+		game.printBoard();
 	}
 }
