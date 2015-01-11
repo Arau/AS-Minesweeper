@@ -31,7 +31,7 @@ public class MinesWeeper {
 	}
 	
 	public void setId (int id) {
+		HibernateUtil.updatePkey("MinesWeeper", "id", this.id, id);
 		this.id = id;
-		HibernateUtil.update(this);
 	}
 }

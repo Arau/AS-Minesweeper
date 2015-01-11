@@ -44,6 +44,22 @@ public class HibernateUtil {
         return o;
     }
     
+    public static int updatePkey(String myTable, String field, Object oldK, Object newK) {
+    	SessionFactory sf = HibernateUtil.getSessionFactory();
+        Session session = sf.openSession();
+        session.beginTransaction();
+        
+    	String hql = "UPDATE " + myTable + " SET " + field + " = :param1" + " WHERE " + field + " = :param2";
+    	Query query = session.createQuery(hql);
+    	query.setParameter("param1", newK);
+    	query.setParameter("param2", oldK);
+    	int result = query.executeUpdate();
+    	
+		session.getTransaction().commit();
+		session.close();
+    	return result; // num rows afected
+    }
+    
     public static void delete(Object o) {
         SessionFactory sf = HibernateUtil.getSessionFactory();
         Session session = sf.openSession();
