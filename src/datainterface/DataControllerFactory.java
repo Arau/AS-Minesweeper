@@ -21,7 +21,7 @@ public class DataControllerFactory {
 	
 	public static DataControllerFactory getInstance() {
         if (instance == null) 
-        	instance = new DataControllerFactory() {};
+        	instance = new DataControllerFactory();
         return instance;
     }
 	
