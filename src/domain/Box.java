@@ -86,11 +86,11 @@ public class Box {
 	
 	public void mark () throws BoxException {
 		if (this.isMarked) {
-			throw new BoxException("Box: " + numRow + " " + numCol + " has already marked");
+			throw new BoxException("Mark Box: " + numRow + " " + numCol + " Has already marked");
 		}
 		
 		if (!this.isHidden) {
-			throw new BoxException("Box: " + numRow + " " + numCol + " has already been shown");
+			throw new BoxException("Mark Box: " + numRow + " " + numCol + " has already been shown");
 		}
 		
 		this.isMarked = true;
@@ -100,15 +100,23 @@ public class Box {
 	
 	public void unMark () throws BoxException {
 		if (!this.isMarked) {
-			throw new BoxException("Box: " + numRow + " " + numCol + " has not been marked");
+			throw new BoxException("Unmark Box: " + numRow + " " + numCol + " Has not been marked");
 		}
 		
 		if (!this.isHidden) {
-			throw new BoxException("Box: " + numRow + " " + numCol + " has already been shown");
+			throw new BoxException("Unmark Box: " + numRow + " " + numCol + " Has already been shown");
 		}
 		
 		this.isMarked = false;		
 		HibernateUtil.update(this);
 		logger.debug("Box " + numRow + " " + numCol + " has been unmarked");
+	}
+	
+	public int getNumRow() {
+		return numRow;
+	}
+	
+	public int getNumCol() {
+		return numCol;
 	}
 }
