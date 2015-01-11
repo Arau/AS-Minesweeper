@@ -21,6 +21,7 @@ public class Board {
 	private Box[][] board;
 	private int width, height;
 	private boolean[][] visited;
+	private int numRemainBoxes;
 	private Game game;
 	
 	public Board (Game g, int width, int height, int numMines) {
@@ -30,8 +31,9 @@ public class Board {
 		
 		board = new Box[width][height];
 		this.width 	= width;
-		this.height = height;
+		this.height = height;		
 		this.game 	= g;
+		this.numRemainBoxes = (width*height) - numMines;
 		
 		this.visited = new boolean[width][height];
 		this.setVisitedToFalse();
@@ -87,7 +89,8 @@ public class Board {
 		} else {
 			toDiscover = discoverAdjBoxesBFS(p);
 		}
-		
+
+		this.numRemainBoxes -= toDiscover.size();
 		return toDiscover;
 	}
 	
@@ -344,6 +347,11 @@ public class Board {
 	
 	public boolean hasMine (Position p) {
 		return this.getBox(p).hasMine();
+	}
+	
+
+	public int getNumRemainBoxes () {
+		return numRemainBoxes;
 	}
 	
 	public void printSTDOUT (boolean all) {		

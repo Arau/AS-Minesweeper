@@ -3,7 +3,7 @@ package main;
 import java.util.List;
 
 import utils.Position;
-import domain.Level;
+import domain.Player;
 import domaincontrollers.PlayUseCase;
 
 public class Main {
@@ -16,7 +16,7 @@ public class Main {
 //
 //		User u = new User ("u1", "n1", "n12", "pwd");		
 //		Admin admin = new Admin("a1", "n2", "n22", "pwd", "933843321");
-//		Player player = new Player("p1", "n3", "n32", "pwd", "p1@p1.com");
+		Player player = new Player("p1", "n3", "n32", "pwd", "p1@p1.com");
 //		Player p2 = new Player("p2", "n4", "n42", "pwd", "p2@p2.com");
 //		Player p3 = new Player("p3", "n4", "n42", "pwd", "p3@p3.com");
 		
@@ -37,6 +37,9 @@ public class Main {
 			playUC.printBoard();
 			playUC.discover( new Position(0, 0) );
 			playUC.printBoard();
+			
+			
+			playUC.startGame(username, levels.get(0));
 			
 			playUC.discover( new Position(2, 2) );
 			playUC.printBoard();

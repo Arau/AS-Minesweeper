@@ -6,10 +6,8 @@ import java.util.List;
 
 import javassist.bytecode.stackmap.TypeData.ClassName;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -20,7 +18,6 @@ import org.apache.log4j.Logger;
 
 import utils.Board;
 import utils.Position;
-import exceptions.BoxException;
 
 
 @Entity
@@ -48,10 +45,6 @@ public class Game {
 	@JoinColumn(name = "level_name", referencedColumnName = "name" )
     private Level level;
 	
-	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
-	@JoinColumn(name = "username", referencedColumnName = "username")
-	private Player player;
-
 	@Transient
 	private Board board;
 	
@@ -62,11 +55,10 @@ public class Game {
 		this.isFinished = Boolean.FALSE;
 		this.isWon 		= Boolean.FALSE;
 		this.numRuns 	= 0;
-        this.player	= player;
 		this.level 	= level;
-		player.setCurrentGame(this);
 		HibernateUtil.save(this);
-		
+
+		player.setCurrentGame(this);
 		this.board = new Board(this, level.getNumBoxColumn(), level.getNumBoxRow(), level.getNumMines());
 	}
 	
@@ -81,6 +73,12 @@ public class Game {
 	public List<Position> discover (Position p) {
 		if (board.hasMine(p)) {
 			// Lost game
+			this.setFinished(true);
+		} else {
+			if (board.getNumRemainBoxes() == 0) {
+				this.setWon(true);
+				this.setFinished(true);
+			}
 		}
 		
 		return board.discover(p); 
