@@ -74,10 +74,12 @@ public class Game {
 		if (board.hasMine(p)) {
 			// Lost game
 			this.setFinished(true);
+			logger.debug("Lost game");
 		} else {
 			if (board.getNumRemainBoxes() == 0) {
 				this.setWon(true);
 				this.setFinished(true);
+				logger.debug("Won game");
 			}
 		}
 		
