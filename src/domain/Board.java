@@ -1,4 +1,4 @@
-package utils;
+package domain;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,8 +11,7 @@ import javassist.bytecode.stackmap.TypeData.ClassName;
 
 import org.apache.log4j.Logger;
 
-import domain.Box;
-import domain.Game;
+import utils.Position;
 import exceptions.BoxException;
 
 public class Board {

@@ -16,8 +16,8 @@ import javax.persistence.Transient;
 
 import org.apache.log4j.Logger;
 
-import utils.Board;
 import utils.Position;
+
 
 
 @Entity
