@@ -15,38 +15,38 @@ import org.apache.log4j.Logger;
 
 import exceptions.BoxException;
 
-@Entity
-@Table(name = Box.TABLE)
+// @Entity
+// @Table(name = Box.TABLE)
 public class Box {
 	public static final String TABLE = "BOX";
 	
-	@Transient
+	// @Transient
 	private static final Logger logger = Logger.getLogger( ClassName.class.getName() );
 	
 	
-	@Id
+	// @Id
 	private int id;
 		
-	@ManyToOne
-	@JoinColumn(name = "id_game")
+	// @ManyToOne
+	// @JoinColumn(name = "id_game")
 	private Game game;
 	
-	@Column(name = "num_row")
+	// @Column(name = "num_row")
 	private int numRow;
 	
-	@Column(name = "num_col")
+	// @Column(name = "num_col")
 	private int numCol;
 	
-	@Column(name = "num_mines_around")
+	// @Column(name = "num_mines_around")
 	private int numMinesAround;
 	
-	@Column(name = "has_mine") 
+	// @Column(name = "has_mine") 
 	private boolean hasMine;
 	
-	@Column(name = "is_hidden") 
+	// @Column(name = "is_hidden") 
 	private boolean isHidden;
 	
-	@Column(name = "is_marked") 
+	// @Column(name = "is_marked") 
 	private boolean isMarked;
 	
 	
@@ -61,7 +61,7 @@ public class Box {
 		this.isMarked 	= false;
 		this.id = hashCode();
 		this.numMinesAround = 0;
-		HibernateUtil.save(this);
+		// HibernateUtil.save(this);
 	}
 	
 	public static int hashCode (int idGame, int numRow, int numCol) {
@@ -81,7 +81,7 @@ public class Box {
 
 	public void incrementMinesAround() {
 		numMinesAround++;
-		HibernateUtil.update(this);
+		// HibernateUtil.update(this);
 	}
 	
 	public void mark () throws BoxException {
@@ -94,7 +94,7 @@ public class Box {
 		}
 		
 		this.isMarked = true;
-		HibernateUtil.update(this);
+		// HibernateUtil.update(this);
 		logger.debug("Box " + numRow + " " + numCol + " has been marked");
 	}
 	
@@ -108,7 +108,7 @@ public class Box {
 		}
 		
 		this.isMarked = false;		
-		HibernateUtil.update(this);
+		// HibernateUtil.update(this);
 		logger.debug("Box " + numRow + " " + numCol + " has been unmarked");
 	}
 	
@@ -138,7 +138,7 @@ public class Box {
 		}
 
 		this.isHidden = false;
-		HibernateUtil.update(this);
+		// HibernateUtil.update(this);
 		logger.debug("Box " + numRow + " " + numCol + " has been discovered");
 	}
 }
