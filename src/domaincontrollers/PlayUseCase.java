@@ -52,13 +52,19 @@ public class PlayUseCase {
 	
 	public List<Position> discover (Position p) throws BoxException {
 		List<Position> discovered = game.discover(p);
-		if ( game.isWon() ) {
-			MessageAdapter ma = AdapterFactory.getInstance().getMessageAdapter();
-			ma.sendMessage("Win"); // TODO: Fill with punctuation
-		}
 		
 		if ( game.isFinished() ) {
 			player.finishGame(game);
+			String msg = player.getUserName();
+			if ( game.isWon() ) {
+				msg += " You won! "; 
+			} else {
+				msg += " You lose! ";
+			}
+			msg += " Score: " + Long.toString( game.getScore() );
+			
+			MessageAdapter ma = AdapterFactory.getInstance().getMessageAdapter();
+			ma.sendMessage(msg);
 		}
 		return discovered;
 	}
