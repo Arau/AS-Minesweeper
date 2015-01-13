@@ -1,8 +1,12 @@
 package adapters;
 
+import javassist.bytecode.stackmap.TypeData.ClassName;
+
+import org.apache.log4j.Logger;
+
 public class MessageAdapter implements IMessageAdapter {
 	private static MessageAdapter instance;
-
+	private static final Logger logger = Logger.getLogger( ClassName.class.getName() );
 	
 	public MessageAdapter() {}
 	
@@ -13,6 +17,6 @@ public class MessageAdapter implements IMessageAdapter {
 	}
 	
 	public void sendMessage (String msg) {
-		// TODO
+		logger.debug(msg);
 	}
 }
