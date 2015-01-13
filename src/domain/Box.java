@@ -1,20 +1,13 @@
 package domain;
 
-import hibernate.HibernateUtil;
 import javassist.bytecode.stackmap.TypeData.ClassName;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import org.apache.log4j.Logger;
 
 import exceptions.BoxException;
 
+
+// Unpersisted: No need to be save in DB and highly performance issues
 // @Entity
 // @Table(name = Box.TABLE)
 public class Box {
