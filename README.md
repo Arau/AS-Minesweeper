@@ -1,4 +1,7 @@
-AS-Minesweeper
+Minesweeper
 =============
 
-Software Architecture project
+MinesWeeper game implemented in Java.
+
+Software Architecture project.
+
