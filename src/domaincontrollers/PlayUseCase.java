@@ -13,17 +13,18 @@ import domain.Level;
 import domain.MinesWeeper;
 import domain.Player;
 import exceptions.BoxException;
+import exceptions.LevelException;
 
 public class PlayUseCase {
 	
 	private Game game;
 	private Player player;
 	
-	public boolean login(String username, String pwd) throws Exception {
+	public boolean login(String username, String pwd) {
 		return (new LoginUseCase()).login(username, pwd);
 	}
 	
-	public List<String> retrieveLevels() throws Exception {
+	public List<String> retrieveLevels() throws LevelException {
 		return (new RetrieveLevelsUseCase()).retrieveLevels();
 	}
 	
@@ -72,5 +73,13 @@ public class PlayUseCase {
 	
 	public void printBoard() {
 		game.printBoard();
+	}
+
+	public int getBoxInfo(Position p) {
+		return game.getBoxInfo(p);
+	}
+
+	public Position getGameSize() {
+		return game.getBoardSize();
 	}
 }

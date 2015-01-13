@@ -253,6 +253,19 @@ public class Board {
 		return numRemainBoxes;
 	}
 	
+	public int getBoxInfo(Position p) {
+		Box b = this.getBox(p);
+		if (b.hasMine()) {
+			return -1;
+		} else {
+			return b.getNumMinesAround(); 
+		}
+	}
+	
+	public Position getSize() {
+		return new Position(height, width);
+	}
+
 	public void printSTDOUT (boolean all) {		
 		for (int i = 0; i < height; ++i) {
 			String s = "";
@@ -274,7 +287,6 @@ public class Board {
 			System.out.println(s + "\n");
 		}
 		System.out.println("\n");
-	}	
+	}
+	
 }
-
-

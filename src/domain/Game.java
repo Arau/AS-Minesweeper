@@ -134,5 +134,13 @@ public class Game {
 		board.printSTDOUT(false);
 		board.printSTDOUT(true);
 	}
+
+	public int getBoxInfo(Position p) {
+		return board.getBoxInfo(p);
+	}
+
+	public Position getBoardSize() {
+		return board.getSize();
+	}
 	
 }	
