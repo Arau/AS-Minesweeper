@@ -3,6 +3,7 @@ package domain;
 import hibernate.HibernateUtil;
 
 import java.util.List;
+import java.util.Random;
 
 import javassist.bytecode.stackmap.TypeData.ClassName;
 
@@ -38,8 +39,13 @@ public class Game {
 	@Column(name = "is_won")
 	private boolean isWon;
 	
-	@Column(name = "num_runs")
-	private int numRuns;
+	@Column(name = "num_rolls")
+	private int numRolls;
+	
+	@Transient
+	private ScoreStrategy scoreStrategy;
+	
+	private long score;
 	
 	@ManyToOne
 	@JoinColumn(name = "level_name", referencedColumnName = "name" )
@@ -54,12 +60,13 @@ public class Game {
 		this.idGame		= idGame;
 		this.isFinished = Boolean.FALSE;
 		this.isWon 		= Boolean.FALSE;
-		this.numRuns 	= 0;
+		this.numRolls 	= 1;
 		this.level 	= level;
 		HibernateUtil.save(this);
 
 		player.setCurrentGame(this);
 		this.board = new Board(this, level.getNumBoxColumn(), level.getNumBoxRow(), level.getNumMines());
+		this.assignScoreStrategy();
 	}
 	
 	public void markBox(Position p) {
@@ -74,16 +81,29 @@ public class Game {
 		if (board.hasMine(p)) {
 			// Lost game
 			this.setFinished(true);
+			this.updateScore();
 			logger.debug("Lost game");
-		} else {
-			if (board.getNumRemainBoxes() == 0) {
-				this.setWon(true);
-				this.setFinished(true);
-				logger.debug("Won game");
-			}
+		} else if (board.getNumRemainBoxes() == 0) {
+			this.setWon(true);
+			this.setFinished(true);
+			this.updateScore();
+			logger.debug("Won game");
 		}
 		
+		this.incrementNumRolls();
 		return board.discover(p); 
+	}
+	
+	private void assignScoreStrategy() {
+		Random rg = new Random();
+		int strategy = rg.nextInt(2);
+		if(strategy == 0) {
+			scoreStrategy = new ScoreByTime();
+			logger.debug("Score strategy: Time");
+		} else {
+			scoreStrategy = new ScoreByRolls();
+			logger.debug("Score strategy: Rolls");
+		}
 	}
 	
 	public int getId() {
@@ -110,12 +130,22 @@ public class Game {
 		this.isWon = isWon;
 	}
 
-	public int getNumRuns() {
-		return numRuns;
+	public int getNumRolls() {
+		return numRolls;
 	}
 
-	public void setNumRuns(int numRuns) {
-		this.numRuns = numRuns;
+	public void incrementNumRolls () {
+		numRolls++;
+		HibernateUtil.update(this);
+	}
+	
+	public void updateScore () {
+		this.score = scoreStrategy.getScore(this.numRolls);
+		HibernateUtil.update(this);
+	}
+	
+	public long getScore () {
+		return this.score;
 	}
 
 	public Level getLevel() {
@@ -142,5 +172,4 @@ public class Game {
 	public Position getBoardSize() {
 		return board.getSize();
 	}
-	
 }	
