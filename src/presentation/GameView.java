@@ -1,12 +1,13 @@
 package presentation;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.Point;
 import java.util.List;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.LineBorder;
 
 import presentation.components.BoardBox;
 import presentation.components.MineBox;
@@ -16,7 +17,7 @@ import utils.Position;
 public class GameView extends JPanel {
 	
 	protected int width, height;
-	protected static int xOffset = 100;
+	protected static int xOffset = 90;
 	protected static int yOffset = 90;
 	protected static int boxSize = 18;
 	protected JPanel board;
@@ -32,7 +33,7 @@ public class GameView extends JPanel {
 		
 		board = new JPanel();
 		board.setLayout(new GridLayout(height, width, 0, 0));
-		board.setPreferredSize( new Dimension(boxSize*width+10, boxSize*height+10) );
+		board.setPreferredSize( new Dimension(boxSize*width, boxSize*height) );
 		board.setBounds(xOffset, yOffset, width*boxSize, height*boxSize);
 		
 		JLabel rolls = new JLabel("Rolls");

@@ -35,6 +35,7 @@ public class BoardBox extends JComponent implements MouseListener {
 		this.flag 	= false;
 		this.hidden = true;
 		this.color = new Color(224,224,224);
+		
 	}
 	
 	@Override

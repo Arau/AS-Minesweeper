@@ -26,7 +26,7 @@ public class NumBox extends BoardBox {
 		} else {
 			this.showNum();
 		}
-		g.drawRect(0, 0, width, height);
+		painter.drawRect(1, 1, width-3, height-3);
 	}
 	
 	public void discover() {

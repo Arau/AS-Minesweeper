@@ -1,6 +1,7 @@
 package presentation.components;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 
 import utils.Position;
@@ -13,6 +14,8 @@ public class MineBox extends BoardBox {
 	
 	@Override
 	public void paintComponent(Graphics g) {
+		this.painter = g;
+		
 		// Offset calculus
 		int row = this.position.getRow()*height;
 		int col = this.position.getCol()*width;
@@ -23,7 +26,7 @@ public class MineBox extends BoardBox {
 		} else {
 			this.showMine();
 		}
-		g.drawRect(0, 0, width, height);
+		painter.drawRect(1, 1, width-3, height-3);
 	}
 	
 	public void discover() {
@@ -33,7 +36,11 @@ public class MineBox extends BoardBox {
 	private void showMine() {
 		this.hidden = false;
 		this.flag = false;
-		
+		this.painter.setColor(Color.RED);
+		this.painter.fillOval(4, 6, 8, 8);
+		this.painter.fillRect(6, 4, 3, 6);
+		this.painter.setColor(color);
+		this.setForeground( color );
 		this.setForeground(Color.BLUE);
 	}
 }
