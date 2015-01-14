@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.Random;
+
 import hibernate.HibernateUtil;
 
 import javax.persistence.Entity;
@@ -15,13 +17,14 @@ public class MinesWeeper {
 	private int id;
 	
 	public MinesWeeper() {
-		id = 0;
+		Random rg = new Random();
+		id = rg.nextInt(9999999);
 		HibernateUtil.save(this);
 	}	
 	
 	private static MinesWeeper instance;
 	public static MinesWeeper getInstance() {
-		if (instance == null)
+		if (instance == null) 
 			instance = new MinesWeeper();
 		return instance;
 	}	
