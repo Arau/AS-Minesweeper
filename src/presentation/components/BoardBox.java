@@ -5,10 +5,10 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
 
 import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
-import javax.swing.border.LineBorder;
 
 import presentation.PlayGameController;
 import utils.Position;
@@ -21,6 +21,10 @@ public class BoardBox extends JComponent implements MouseListener {
 	protected Position position;
 	protected boolean flag;
 	protected boolean hidden;
+	protected BufferedImage image;
+	protected Graphics painter;
+	protected Color color;
+	
 	
 	public BoardBox (Position p) {
 		super();
@@ -30,6 +34,7 @@ public class BoardBox extends JComponent implements MouseListener {
 		this.position = p;
 		this.flag 	= false;
 		this.hidden = true;
+		this.color = new Color(224,224,224);
 	}
 	
 	@Override
@@ -48,7 +53,9 @@ public class BoardBox extends JComponent implements MouseListener {
 	}
 	
 	@Override
-	public void paintComponent(Graphics g) {}
+	public void paintComponent(Graphics g) {
+		painter = g;
+	}
 	
 	public Position getPosition() {
 		return position;
@@ -61,17 +68,21 @@ public class BoardBox extends JComponent implements MouseListener {
 			this.flag = true;
 			PlayGameController.getInstance().prDiscoverBox(position);
 		} else if (SwingUtilities.isRightMouseButton(e)) {
-			this.flag = true;
 			PlayGameController.getInstance().prFlagBox(position);
-			this.showFlag();
+			this.toggleFlag();
 		}
 	}
 	
 	public void discover() {}
 	
-	protected void showFlag() {
-		this.flag = true;
-		this.setForeground(Color.YELLOW); // TODO Should show a flag icon
+	protected void toggleFlag() {
+		if (flag == true) {
+			flag = false;
+			this.setForeground( Color.BLACK );	
+		} else {
+			flag = true;
+			this.setForeground( Color.RED );
+		}
 	}
 
 	@Override

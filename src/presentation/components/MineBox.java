@@ -3,8 +3,6 @@ package presentation.components;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import javax.swing.border.LineBorder;
-
 import utils.Position;
 
 public class MineBox extends BoardBox {
@@ -22,8 +20,6 @@ public class MineBox extends BoardBox {
 		g.drawRect(col, row, width, height);
 		if (this.hidden) {
 			this.setForeground( Color.RED );
-		} else if (this.flag) {
-			this.showFlag();
 		} else {
 			this.showMine();
 		}

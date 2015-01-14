@@ -1,30 +1,28 @@
 package presentation.components;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
-
-import javax.swing.border.LineBorder;
 
 import utils.Position;
 
 public class NumBox extends BoardBox {
 	private int num;
+	private Color numColor;
+	
 	
 	public NumBox(Position p, int num) {
 		super(p);
 		this.num = num;
+		this.numColor = new Color(10, 240, 10);
 	}
 
 	@Override
 	public void paintComponent(Graphics g) {
-		// Offset calculus
-		int row = this.position.getRow()*height;
-		int col = this.position.getCol()*width;
+		this.painter = g;
 		
 		if (this.hidden) {
-			this.setBackground( new Color(224,224,224) );
-		} else if (this.flag) {
-			this.showFlag();
+			this.setBackground( color );
 		} else {
 			this.showNum();
 		}
@@ -40,9 +38,13 @@ public class NumBox extends BoardBox {
 		this.flag = false;
 		
 		if (this.num == 0) {
-			this.setForeground( new Color(224, 224, 224) );
+			this.setForeground( color );
 		} else {
-			this.setForeground( Color.GREEN ); // TODO Should show the number
+			this.painter.setColor(numColor);
+			this.painter.setFont(new Font("Serif", Font.BOLD, 15)); 
+			this.painter.drawString(Integer.toString(num), 5, 15);
+			this.painter.setColor(color);
+			this.setForeground( color );
 		}
-	}
+	}	
 }
