@@ -50,7 +50,7 @@ public class PlayUseCase {
 		this.game.unMarkBox(p);
 	}
 	
-	public List<Position> discover (Position p) throws BoxException {
+	public List<Position> discover (Position p) {
 		List<Position> discovered = game.discover(p);
 		
 		if ( game.isFinished() ) {
@@ -62,7 +62,6 @@ public class PlayUseCase {
 				msg += " You lose! ";
 			}
 			msg += " Score: " + Long.toString( game.getScore() );
-			
 			MessageAdapter ma = AdapterFactory.getInstance().getMessageAdapter();
 			ma.sendMessage(msg);
 		}
