@@ -61,7 +61,16 @@ public class PlayGameController {
 		}
 		view.showGame();
 	}
+	
+	public void prDiscoverBox(Position p) {
+		List<Position> toDiscover = playUc.discover(p);
+		view.discoverBox(toDiscover);
+	}
 
+	public void prFlagBox(Position p) {
+		// TODO talk with Backend
+	}
+	
 	public int getBoxInfo(Position p) {
 		return playUc.getBoxInfo(p);
 	}

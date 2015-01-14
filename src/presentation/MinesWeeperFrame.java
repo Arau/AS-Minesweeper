@@ -1,18 +1,23 @@
 package presentation;
 
 import java.awt.BorderLayout;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import utils.Position;
+
 public class MinesWeeperFrame extends JFrame {
 
 	private JPanel contentPane;
+	private GameView gameView;
 
 	public MinesWeeperFrame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(300, 20, 450, 300);
+		//setBounds(300, 20, 450, 300);
+		setBounds(300, 20, 600, 600);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -43,8 +48,13 @@ public class MinesWeeperFrame extends JFrame {
 	}
 	
 	public void showGame() {
-		switchPanel( new GameView() );
-		setSize(600, 620);
+		gameView = new GameView();
+		switchPanel( gameView );
+		setSize(630, 670);
+	}
+	
+	public void discoverBox(List<Position> toDiscover) {
+		gameView.discoverBox(toDiscover);
 	}
 	
 	private void switchPanel(JPanel panel) {
