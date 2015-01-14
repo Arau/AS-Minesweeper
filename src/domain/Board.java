@@ -120,21 +120,20 @@ public class Board {
 
 	private void fillAdjacentBoxes(Position source) {
 		for (Position adj: adjPos(source)) {
-			if ( isValid(adj) && !visited(adj) ) {
-				this.setUpBox(adj);
+			if ( isValid(adj) ) {
+				if ( !visited(adj) ) {
+					visit(adj);
+					Box b = new Box(game, adj.getRow(), adj.getCol(), false);
+					b.incrementMinesAround();
+					this.addBox(b);
+					logger.debug("Create near bomb box in " + adj.toString());
+				} else {
+					this.getBox(adj).incrementMinesAround();		
+				}
 			}
 		}
 	}
 	
-	private void setUpBox (Position p) {
-		if ( !visited(p) ) {
-			visit(p);
-			this.addBox( new Box(game, p.getRow(), p.getCol(), false) );
-			logger.debug("Create near bomb box in " + p.toString());
-		}
-		this.getBox(p).incrementMinesAround();
-	}
-
 	private List<Position> discoverAdjBoxesBFS (Position source) {
 		List<Position> pos = new ArrayList<Position>();
 		Queue<Position> toVisit = new LinkedList<Position>();

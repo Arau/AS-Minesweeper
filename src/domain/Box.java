@@ -73,7 +73,7 @@ public class Box {
 	}
 
 	public void incrementMinesAround() {
-		numMinesAround++;
+		++numMinesAround;
 		// HibernateUtil.update(this);
 	}
 	
