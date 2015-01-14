@@ -19,20 +19,25 @@ public class MineBox extends BoardBox {
 		int row = this.position.getRow()*height;
 		int col = this.position.getCol()*width;
 		
+		g.drawRect(col, row, width, height);
 		if (this.hidden) {
-			this.setOpaque(true);
-			this.setForeground(Color.GRAY);
+			this.setForeground( Color.RED );
 		} else if (this.flag) {
 			this.showFlag();
 		} else {
-			this.setOpaque(false);
 			this.showMine();
 		}
-		g.drawRect(col, row, width, height);
+		g.drawRect(0, 0, width, height);
+	}
+	
+	public void discover() {
+		this.showMine();
 	}
 	
 	private void showMine() {
-		this.setBackground(Color.BLUE);
+		this.hidden = false;
+		this.flag = false;
+		
+		this.setForeground(Color.BLUE);
 	}
-	
 }

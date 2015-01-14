@@ -10,12 +10,13 @@ import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
 import javax.swing.border.LineBorder;
 
+import presentation.PlayGameController;
 import utils.Position;
 
 public class BoardBox extends JComponent implements MouseListener {
 	
-	protected static int width  = 10;
-	protected static int height = 10;
+	protected static int width  = 18;
+	protected static int height = 18;
 	
 	protected Position position;
 	protected boolean flag;
@@ -47,14 +48,7 @@ public class BoardBox extends JComponent implements MouseListener {
 	}
 	
 	@Override
-	public void paintComponent(Graphics g) {
-		// Offset calculus
-		int row = position.getRow()*height;
-		int col = position.getCol()*width;
-		this.setOpaque(true);
-		this.setForeground(Color.GRAY);
-		g.drawRect(col, row, width, height);
-	}
+	public void paintComponent(Graphics g) {}
 	
 	public Position getPosition() {
 		return position;
@@ -64,13 +58,20 @@ public class BoardBox extends JComponent implements MouseListener {
 	public void mouseClicked(MouseEvent e) {
 		if (SwingUtilities.isLeftMouseButton(e)) {
 			this.hidden = false;
+			this.flag = true;
+			PlayGameController.getInstance().prDiscoverBox(position);
 		} else if (SwingUtilities.isRightMouseButton(e)) {
 			this.flag = true;
+			PlayGameController.getInstance().prFlagBox(position);
+			this.showFlag();
 		}
 	}
 	
+	public void discover() {}
+	
 	protected void showFlag() {
-		this.setForeground(Color.RED); // TODO Should show a flag icon
+		this.flag = true;
+		this.setForeground(Color.YELLOW); // TODO Should show a flag icon
 	}
 
 	@Override
@@ -84,5 +85,4 @@ public class BoardBox extends JComponent implements MouseListener {
 
 	@Override
 	public void mouseExited(MouseEvent e) {}
-	
 }

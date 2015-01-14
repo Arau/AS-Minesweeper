@@ -22,23 +22,27 @@ public class NumBox extends BoardBox {
 		int col = this.position.getCol()*width;
 		
 		if (this.hidden) {
-			this.setOpaque(true);
-			this.setForeground(Color.GRAY);
+			this.setBackground( new Color(224,224,224) );
 		} else if (this.flag) {
 			this.showFlag();
 		} else {
-			this.setOpaque(false);
 			this.showNum();
 		}
-		g.drawRect(col, row, width, height);
+		g.drawRect(0, 0, width, height);
+	}
+	
+	public void discover() {
+		this.showNum();
 	}
 	
 	private void showNum() {
+		this.hidden = false;
+		this.flag = false;
+		
 		if (this.num == 0) {
-			this.setBackground( new Color(224, 224, 224) );
+			this.setForeground( new Color(224, 224, 224) );
 		} else {
-			this.setBackground( Color.black ); // TODO Should show the number
-			
+			this.setForeground( Color.GREEN ); // TODO Should show the number
 		}
 	}
 }
