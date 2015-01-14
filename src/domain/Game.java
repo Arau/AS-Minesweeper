@@ -78,6 +78,7 @@ public class Game {
 	}
 	
 	public List<Position> discover (Position p) {
+		List<Position> discovered = board.discover(p);
 		if (board.hasMine(p)) {
 			// Lost game
 			this.setFinished(true);
@@ -91,7 +92,7 @@ public class Game {
 		}
 		
 		this.incrementNumRolls();
-		return board.discover(p); 
+		return discovered; 
 	}
 	
 	private void assignScoreStrategy() {
@@ -120,6 +121,7 @@ public class Game {
 
 	public void setFinished(boolean isFinished) {
 		this.isFinished = isFinished;
+		HibernateUtil.update(this);
 	}
 
 	public boolean isWon() {
@@ -128,6 +130,7 @@ public class Game {
 
 	public void setWon(boolean isWon) {
 		this.isWon = isWon;
+		HibernateUtil.update(this);
 	}
 
 	public int getNumRolls() {
