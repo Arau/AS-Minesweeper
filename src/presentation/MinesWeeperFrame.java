@@ -3,6 +3,7 @@ package presentation;
 import java.util.List;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import utils.Position;
@@ -44,6 +45,10 @@ public class MinesWeeperFrame extends JFrame {
 		gameView = new GameView();
 		switchPanel( gameView );
 		setSize(630, 630);
+	}
+	
+	public void showDialog(String msg) {
+		JOptionPane.showMessageDialog(null, msg);
 	}
 	
 	public void discoverBox(List<Position> toDiscover) {

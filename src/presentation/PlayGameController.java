@@ -65,6 +65,10 @@ public class PlayGameController {
 	public void prDiscoverBox(Position p) {
 		List<Position> toDiscover = playUc.discover(p);
 		view.discoverBox(toDiscover);
+		
+		if (playUc.isFinished()) {
+			view.showDialog(user + " Score: " + playUc.getScore());
+		}
 	}
 
 	public void prFlagBox(Position p) {

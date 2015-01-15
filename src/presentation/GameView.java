@@ -36,9 +36,9 @@ public class GameView extends JPanel {
 		board.setPreferredSize( new Dimension(boxSize*width, boxSize*height) );
 		board.setBounds(xOffset, yOffset, width*boxSize, height*boxSize);
 		
-		JLabel rolls = new JLabel("Rolls");
+		JLabel rolls = new JLabel("");
 		rolls.setBounds(100, 10, xOffset, yOffset);
-		JLabel numMines = new JLabel("mines");
+		JLabel numMines = new JLabel("");
 		numMines.setBounds(300, 10, xOffset, yOffset);
 		this.add(rolls);
 		this.add(numMines);

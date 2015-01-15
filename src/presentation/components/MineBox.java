@@ -41,6 +41,5 @@ public class MineBox extends BoardBox {
 		this.painter.fillRect(6, 4, 3, 6);
 		this.painter.setColor(color);
 		this.setForeground( color );
-		this.setForeground(Color.BLUE);
 	}
 }
