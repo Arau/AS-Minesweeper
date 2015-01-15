@@ -63,7 +63,7 @@ public class PlayUseCase {
 			}
 			msg += " Score: " + Long.toString( game.getScore() );
 			MessageAdapter ma = AdapterFactory.getInstance().getMessageAdapter();
-			ma.sendMessage(msg);
+			ma.sendMessage(player.getMail(), msg);
 		}
 		return discovered;
 	}
@@ -78,6 +78,10 @@ public class PlayUseCase {
 	
 	public void printBoard() {
 		game.printBoard();
+	}
+	
+	public long getScore() {
+		return game.getScore();
 	}
 
 	public int getBoxInfo(Position p) {

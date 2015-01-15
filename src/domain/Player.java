@@ -54,4 +54,8 @@ public class Player extends User {
 		this.setOldGame(g);
 		this.setCurrentGame(null);
 	}
+	
+	public String getMail () {
+		return this.mail;
+	}
 }
